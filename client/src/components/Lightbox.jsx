@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, ChevronLeft, ChevronRight, Calendar, User, Tag } from 'lucide-react';
+import { resolveAssetUrl } from '../utils/urls';
 
 const Lightbox = ({ project, onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -20,7 +21,7 @@ const Lightbox = ({ project, onClose }) => {
   };
 
   const activeImage = images[currentIndex];
-  const imageUrl = activeImage?.startsWith('/uploads/') ? `http://localhost:5000${activeImage}` : activeImage;
+  const imageUrl = resolveAssetUrl(activeImage);
 
   const formattedDate = new Date(project.completedDate).toLocaleDateString('en-US', {
     month: 'long',

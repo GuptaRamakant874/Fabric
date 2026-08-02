@@ -1,5 +1,6 @@
 import React from 'react';
 import { Calendar, User, ArrowUpRight } from 'lucide-react';
+import { resolveAssetUrl } from '../utils/urls';
 
 const ProjectCard = ({ project, onClick }) => {
   const formattedDate = new Date(project.completedDate).toLocaleDateString('en-US', {
@@ -9,7 +10,7 @@ const ProjectCard = ({ project, onClick }) => {
 
   // Resolve Image Path (handles absolute URLs from seed and relative ones from local uploads)
   const mainImage = project.images?.[0];
-  const imageUrl = mainImage?.startsWith('/uploads/') ? `http://localhost:5000${mainImage}` : mainImage;
+  const imageUrl = resolveAssetUrl(mainImage);
 
   return (
     <div

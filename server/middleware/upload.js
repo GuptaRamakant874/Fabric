@@ -2,8 +2,8 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-// Ensure local uploads directory exists
-const uploadDir = path.join(__dirname, '../uploads');
+// Ensure upload directory exists, with deployment override support
+const uploadDir = process.env.UPLOAD_DIR || process.env.UPLOAD_PATH || path.join(__dirname, '../uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }

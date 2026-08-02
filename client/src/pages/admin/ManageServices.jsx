@@ -3,6 +3,7 @@ import { Plus, Edit2, Trash2, X, FileUp, Check, ShieldAlert } from 'lucide-react
 import * as Icons from 'lucide-react';
 import API from '../../api';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import { resolveAssetUrl } from '../../utils/urls';
 
 const ManageServices = () => {
   const [services, setServices] = useState([]);
@@ -175,9 +176,7 @@ const ManageServices = () => {
               <tbody className="divide-y divide-industrial-border/30 text-sm">
                 {services.map((service) => {
                   const IconComp = Icons[service.icon] || Icons.Wrench;
-                  const imageUrl = service.image?.startsWith('/uploads/')
-                    ? `http://localhost:5000${service.image}`
-                    : service.image;
+                  const imageUrl = resolveAssetUrl(service.image);
 
                   return (
                     <tr key={service._id} className="hover:bg-industrial-steel/10 transition-colors">

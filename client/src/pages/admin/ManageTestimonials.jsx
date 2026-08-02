@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, X, FileUp, Check, ShieldAlert, Star } from 'lucide-react';
 import API from '../../api';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import { resolveAssetUrl } from '../../utils/urls';
 
 const ManageTestimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -158,7 +159,7 @@ const ManageTestimonials = () => {
       ) : testimonials.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((t) => {
-            const avatarUrl = t.image?.startsWith('/uploads/') ? `http://localhost:5000${t.image}` : t.image;
+            const avatarUrl = resolveAssetUrl(t.image);
             return (
               <div
                 key={t._id}

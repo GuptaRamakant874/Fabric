@@ -1,5 +1,6 @@
 import React from 'react';
 import * as Icons from 'lucide-react';
+import { resolveAssetUrl } from '../utils/urls';
 
 const ServiceCard = ({ service }) => {
   // Dynamically resolve Lucide Icon component based on saved string name
@@ -11,7 +12,7 @@ const ServiceCard = ({ service }) => {
       <div className="h-48 overflow-hidden relative">
         {service.image ? (
           <img
-            src={service.image.startsWith('/uploads/') ? `http://localhost:5000${service.image}` : service.image}
+            src={resolveAssetUrl(service.image)}
             alt={service.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             loading="lazy"

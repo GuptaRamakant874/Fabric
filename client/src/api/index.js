@@ -1,7 +1,9 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+import { getApiBaseUrl } from '../utils/urls';
+
+const API_URL = `${getApiBaseUrl()}/api`;
 
 // Export the API URL in case components need to build file paths
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+export const API_BASE_URL = getApiBaseUrl();
 
 import axios from 'axios';
 

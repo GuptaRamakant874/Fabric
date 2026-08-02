@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, X, FileUp, Check, ShieldAlert, Star } from 'lucide-react';
 import API from '../../api';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import { resolveAssetUrl } from '../../utils/urls';
 
 const ManagePortfolio = () => {
   const [projects, setProjects] = useState([]);
@@ -208,7 +209,7 @@ const ManagePortfolio = () => {
               <tbody className="divide-y divide-industrial-border/30 text-sm">
                 {projects.map((project) => {
                   const mainImage = project.images?.[0];
-                  const imageUrl = mainImage?.startsWith('/uploads/') ? `http://localhost:5000${mainImage}` : mainImage;
+                  const imageUrl = resolveAssetUrl(mainImage);
                   return (
                     <tr key={project._id} className="hover:bg-industrial-steel/10 transition-colors">
                       <td className="py-4 px-6">
@@ -412,7 +413,7 @@ const ManagePortfolio = () => {
                     </label>
                     <div className="grid grid-cols-4 gap-3">
                       {existingImages.map((img, index) => {
-                        const imgUrl = img.startsWith('/uploads/') ? `http://localhost:5000${img}` : img;
+                        const imgUrl = resolveAssetUrl(img);
                         return (
                           <div key={index} className="relative aspect-video rounded border border-industrial-border overflow-hidden group">
                             <img src={imgUrl} alt="Thumbnail" className="w-full h-full object-cover" />
