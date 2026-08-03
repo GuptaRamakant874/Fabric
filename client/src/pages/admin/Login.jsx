@@ -60,7 +60,7 @@ const Login = () => {
             <Hammer className="h-8 w-8" />
           </div>
           <h2 className="font-display font-black text-2xl tracking-wider text-industrial-light uppercase">
-            VANCE METAL PORTAL
+            HPY ENGINEERING PORTAL
           </h2>
           <p className="text-xs text-industrial-muted uppercase tracking-widest mt-1">
             Administrative Access

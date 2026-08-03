@@ -38,7 +38,7 @@ const Home = () => {
     { label: 'Years in Business', value: '18+' },
     { label: 'Projects Completed', value: '920+' },
     { label: 'Tons of Fabricated Steel', value: '14,500+' },
-    { label: 'AWS Certified Welders', value: '38+' },
+    { label: 'Certified Welding Experts', value: '38+' },
   ];
 
   return (
@@ -60,7 +60,7 @@ const Home = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-3xl text-left space-y-6">
             <div className="inline-flex items-center gap-2 bg-industrial-orange/15 border border-industrial-orange/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-widest text-industrial-orange">
-              <HardHat className="h-4 w-4" /> AISC & AWS Certified Facility
+              <HardHat className="h-4 w-4" /> GMP & AWS Certified Facility
             </div>
             
             <h1 className="font-display font-black text-4xl sm:text-6xl text-industrial-light leading-[1.1] tracking-tight uppercase">
@@ -131,7 +131,7 @@ const Home = () => {
               A Culture of <span className="text-industrial-orange">Precision & Safety</span>
             </h2>
             <p className="text-sm sm:text-base text-industrial-muted leading-relaxed">
-              Founded in 2008, Vance Metal Fabrication has grown from a local workshop into a state-of-the-art heavy engineering and metalwork facility. We serve structural engineers, general contractors, and manufacturing plants nationwide.
+              Founded in 2008, HPY Engineering has grown from a local workshop into a state-of-the-art stainless steel and cleanroom fabrication facility. We serve pharmaceutical, biotech, and industrial clients nationwide.
             </p>
             <p className="text-sm sm:text-base text-industrial-muted leading-relaxed">
               Every weld is performed by certified AWS professionals, and our structural materials comply strictly with AISC standards. Whether you need single prototyping, heavy-duty production runs, or commercial frame erections, we have the machinery and expertise.
@@ -234,7 +234,7 @@ const Home = () => {
                 Client <span className="text-industrial-orange">Reviews</span>
               </h2>
               <p className="text-sm text-industrial-muted">
-                What general contractors and structural engineers say about working with Vance Metal.
+                What pharmaceutical manufacturers and cleanroom engineers say about working with HPY Engineering.
               </p>
             </div>
 

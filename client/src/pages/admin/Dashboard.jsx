@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FileText, Mail, Briefcase, Wrench, Clock, ArrowRight, Eye, ShieldCheck, MailWarning } from 'lucide-react';
+import { FileText, Mail, Briefcase, Wrench, Package, Clock, ArrowRight, Eye, ShieldCheck, MailWarning } from 'lucide-react';
 import API from '../../api';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
@@ -12,6 +12,7 @@ const Dashboard = () => {
     totalMessages: 0,
     unreadMessages: 0,
     totalProjects: 0,
+    totalProducts: 0,
     totalServices: 0,
   });
   const [recentQuotes, setRecentQuotes] = useState([]);
@@ -20,16 +21,18 @@ const Dashboard = () => {
   useEffect(() => {
     const loadDashboardData = async () => {
       try {
-        const [quotesRes, contactsRes, projectsRes, servicesRes] = await Promise.all([
+        const [quotesRes, contactsRes, projectsRes, productsRes, servicesRes] = await Promise.all([
           API.getQuotes(),
           API.getContacts(),
           API.getProjects(),
+          API.getProducts(),
           API.getServices(),
         ]);
 
         const quotes = quotesRes.data.data;
         const messages = contactsRes.data.data;
         const projects = projectsRes.data.data;
+        const products = productsRes.data.data;
         const services = servicesRes.data.data;
 
         const newQuotesCount = quotes.filter((q) => q.status === 'New').length;
@@ -41,6 +44,7 @@ const Dashboard = () => {
           totalMessages: messages.length,
           unreadMessages: unreadMessagesCount,
           totalProjects: projects.length,
+          totalProducts: products.length,
           totalServices: services.length,
         });
 
@@ -85,6 +89,13 @@ const Dashboard = () => {
       link: '/admin/portfolio',
     },
     {
+      title: 'Product Items',
+      value: stats.totalProducts,
+      subText: 'Catalogue entries',
+      icon: <Package className="h-6 w-6 text-industrial-orange" />,
+      link: '/admin/products',
+    },
+    {
       title: 'Services Active',
       value: stats.totalServices,
       subText: 'Capabilities listed',
@@ -100,8 +111,8 @@ const Dashboard = () => {
         <h1 className="font-display font-black text-3xl text-industrial-light uppercase tracking-tight">
           Admin <span className="text-industrial-orange">Dashboard</span>
         </h1>
-        <p className="text-sm text-industrial-muted mt-1">
-          Welcome to the Vance Steel website control center. View recent quote bids and messages below.
+        <p className="text-sm text-slate-400 mt-1">
+          Welcome to the HPY Engineering control center. View recent quote bids and messages below.
         </p>
       </div>
 

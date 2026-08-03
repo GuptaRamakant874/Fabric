@@ -17,14 +17,15 @@ if (isConfigured) {
   console.warn('Cloudinary credentials missing. File uploads will default to local storage.');
 }
 
-const uploadFile = async (filePath, folder = 'fab_steel') => {
+const uploadFile = async (filePath, folder = 'fab_steel', options = {}) => {
   if (!isConfigured) {
     return null;
   }
   try {
     const result = await cloudinary.uploader.upload(filePath, {
       folder: folder,
-      resource_type: 'auto', // Detects PDF, DOCX, images, etc.
+      resource_type: 'auto',
+      ...options,
     });
     return result.secure_url;
   } catch (error) {
@@ -33,4 +34,4 @@ const uploadFile = async (filePath, folder = 'fab_steel') => {
   }
 };
 
-module.exports = { isConfigured, uploadFile };
+module.exports = { isConfigured, uploadFile, cloudinary };

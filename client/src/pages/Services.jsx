@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { HelpCircle, ArrowRight, ShieldCheck, Hammer } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Hammer } from 'lucide-react';
 import API from '../api';
 import ServiceCard from '../components/ServiceCard';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -10,6 +10,8 @@ const Services = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeCategory, setActiveCategory] = useState('All');
+  const [sortBy, setSortBy] = useState('Popular');
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -17,7 +19,7 @@ const Services = () => {
         const res = await API.getServices();
         setServices(res.data.data);
       } catch (err) {
-        setError('Failed to load services. Please check back later.');
+        setError('Failed to load products. Please check back later.');
         console.error('Error fetching services:', err.message);
       } finally {
         setLoading(false);
@@ -26,71 +28,121 @@ const Services = () => {
     fetchServices();
   }, []);
 
+  const categories = useMemo(() => {
+    const unique = Array.from(new Set(services.map((service) => service.category || '').filter(Boolean)));
+    return ['All', ...unique];
+  }, [services]);
+
+  const filteredServices = useMemo(() => {
+    const list = activeCategory === 'All'
+      ? services
+      : services.filter((service) => service.category === activeCategory);
+
+    if (sortBy === 'Name') {
+      return [...list].sort((a, b) => a.title.localeCompare(b.title));
+    }
+    return [...list].sort((a, b) => (a.order || 0) - (b.order || 0));
+  }, [services, activeCategory, sortBy]);
+
   return (
     <div className="pt-20">
-      {/* Services Header */}
       <section className="bg-industrial-gray border-b border-industrial-border/60 py-16 text-center relative overflow-hidden">
         <div className="absolute inset-0 industrial-grid opacity-10"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.34em] text-industrial-orange mb-4">Product Catalog</p>
           <h1 className="font-display font-black text-3xl sm:text-5xl text-industrial-light uppercase tracking-tight">
-            Fabrication <span className="text-industrial-orange">Capabilities</span>
+            SS Cabinets, Trolleys, Workstations & More
           </h1>
           <p className="mt-4 text-sm sm:text-base text-industrial-muted max-w-2xl mx-auto">
-            From multi-ton structural building skeletons to precision-formed custom brackets, we offer full-service metal fabrication.
+            Explore HPY Engineering’s stainless steel product categories for cleanroom, pharma, and laboratory applications.
           </p>
         </div>
       </section>
 
-      {/* Services Grid Section */}
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {loading ? (
-          <LoadingSpinner />
-        ) : error ? (
-          <div className="text-center text-red-500 font-bold p-8 bg-red-500/10 border border-red-500/20 rounded-lg max-w-xl mx-auto">
-            {error}
-          </div>
-        ) : services.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-            {services.map((service) => (
-              <ServiceCard key={service._id} service={service} />
-            ))}
-          </div>
-        ) : (
-          <EmptyState
-            message="No Services Configured"
-            description="Sample services can be loaded using the database seeder script or created directly inside the admin panel."
-          />
-        )}
-      </section>
+        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-10">
+          <aside className="space-y-8">
+            <div className="rounded-3xl border border-industrial-border/60 bg-industrial-gray p-6 shadow-xl">
+              <h2 className="font-display font-black text-sm uppercase tracking-[0.28em] text-industrial-light mb-6">Product Categories</h2>
+              <div className="space-y-2">
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    type="button"
+                    onClick={() => setActiveCategory(category)}
+                    className={`w-full text-left rounded-2xl px-4 py-3 text-sm font-semibold transition ${
+                      activeCategory === category
+                        ? 'bg-industrial-orange text-industrial-charcoal shadow-lg'
+                        : 'bg-industrial-charcoal/20 text-industrial-light hover:bg-industrial-charcoal/40'
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-      {/* Specialty Custom Capability Panel */}
-      <section className="bg-industrial-gray border-t border-b border-industrial-border/60 py-16">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <div className="inline-flex p-3 rounded-full bg-industrial-orange/10 border border-industrial-orange/30 text-industrial-orange">
-            <HelpCircle className="h-8 w-8" />
-          </div>
-          
-          <h2 className="font-display font-black text-2xl sm:text-3xl text-industrial-light uppercase tracking-tight">
-            Need a Bespoke <span className="text-industrial-orange">Custom Component?</span>
-          </h2>
-          
-          <p className="text-sm sm:text-base text-industrial-muted max-w-2xl mx-auto leading-relaxed">
-            Our engineering team specializes in translating custom AutoCAD, SolidWorks, or PDF drawings into structurally sound metal products. We handle material selections, stress calculations, and structural detailing.
-          </p>
+            <div className="rounded-3xl border border-industrial-border/60 bg-industrial-gray p-6 shadow-xl">
+              <h3 className="font-display font-bold text-lg text-industrial-light mb-4">Need Custom Design?</h3>
+              <p className="text-sm text-industrial-muted leading-relaxed">
+                We manufacture per your requirement with precision stainless steel fabrication for custom cabinets, tables, racks and cleanroom equipment.
+              </p>
+              <Link
+                to="/quote"
+                className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-industrial-orange px-5 py-3 text-sm font-bold uppercase tracking-[0.18em] text-industrial-charcoal transition hover:bg-industrial-orange-hover"
+              >
+                Request Customization
+              </Link>
+            </div>
+          </aside>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <Link
-              to="/quote"
-              className="inline-flex items-center justify-center px-6 py-3.5 rounded-md bg-industrial-orange hover:bg-industrial-orange-hover text-industrial-charcoal font-black text-sm tracking-wider uppercase transition-all shadow-lg hover:scale-[1.02]"
-            >
-              Upload Spec Sheets <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-            <Link
-              to="/contact"
-              className="inline-flex items-center justify-center px-6 py-3.5 rounded-md bg-industrial-steel/40 hover:bg-industrial-steel border border-industrial-border text-industrial-light font-bold text-sm tracking-wider uppercase transition-all"
-            >
-              Consult an Engineer
-            </Link>
+          <div className="space-y-8">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.34em] text-industrial-orange mb-2">Showing</p>
+                <h2 className="font-display font-black text-2xl sm:text-3xl text-industrial-light uppercase tracking-tight">
+                  {activeCategory === 'All' ? 'All Products' : activeCategory}
+                </h2>
+              </div>
+              <div className="flex items-center gap-3 text-sm text-industrial-muted">
+                <label htmlFor="sortBy" className="uppercase tracking-[0.22em] text-xs">Sort by</label>
+                <select
+                  id="sortBy"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="rounded-full border border-industrial-border/70 bg-industrial-charcoal px-4 py-2 text-sm text-industrial-light outline-none focus:border-industrial-orange"
+                >
+                  <option value="Popular">Popular</option>
+                  <option value="Name">Name</option>
+                </select>
+              </div>
+            </div>
+
+            {loading ? (
+              <LoadingSpinner />
+            ) : error ? (
+              <div className="text-center text-red-500 font-bold p-8 bg-red-500/10 border border-red-500/20 rounded-lg max-w-xl mx-auto">
+                {error}
+              </div>
+            ) : filteredServices.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                {filteredServices.map((service) => (
+                  <ServiceCard
+                    key={service._id}
+                    service={service}
+                    onClick={() => {
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                      // This placeholder can be replaced with a dedicated product detail action.
+                    }}
+                  />
+                ))}
+              </div>
+            ) : (
+              <EmptyState
+                message="No products found"
+                description="Select a different category or seed product data through the admin panel."
+              />
+            )}
           </div>
         </div>
       </section>

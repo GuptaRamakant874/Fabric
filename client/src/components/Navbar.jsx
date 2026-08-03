@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Hammer, ShieldAlert, LayoutDashboard } from 'lucide-react';
+import { Menu, X, Hammer, Phone, Mail, LayoutDashboard, Globe2, ExternalLink } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
@@ -8,168 +8,125 @@ const Navbar = () => {
   const location = useLocation();
   const { isAuthenticated } = useAuth();
 
-  // Close mobile menu on route change
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Services', path: '/services' },
-    { name: 'Portfolio', path: '/portfolio' },
     { name: 'About Us', path: '/about' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Products', path: '/services' },
+    { name: 'Industries', path: '/about#industries' },
+    { name: 'Projects', path: '/portfolio' },
+    { name: 'Catalog', path: '/quote' },
+    { name: 'Contact Us', path: '/contact' },
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-40 bg-industrial-charcoal/90 backdrop-blur-md border-b border-industrial-border/60 py-3 shadow-lg transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <div className="bg-industrial-orange text-industrial-charcoal p-2 rounded-lg font-bold transition-transform duration-300 group-hover:rotate-6">
-              <Hammer className="h-6 w-6" />
-            </div>
-            <div>
-              <span className="font-display font-black text-xl tracking-wider text-industrial-light block leading-none">
-                VANCE
-              </span>
-              <span className="font-sans font-bold text-xs tracking-widest text-industrial-orange block leading-none mt-1">
-                METAL FABRICATION
-              </span>
-            </div>
-          </Link>
+    <div className="sticky top-0 z-50">
+      <div className="hidden md:flex items-center justify-between bg-slate-950 text-slate-200 px-6 py-2 text-xs tracking-[0.16em]">
+        <div className="flex items-center gap-6">
+          <a href="tel:+916358890888" className="inline-flex items-center gap-2 hover:text-sky-300 transition-colors">
+            <Phone className="h-4 w-4" />
+            +91 63588 90888
+          </a>
+          <a href="mailto:info@hpyengineering.com" className="inline-flex items-center gap-2 hover:text-sky-300 transition-colors">
+            <Mail className="h-4 w-4" />
+            info@hpyengineering.com
+          </a>
+        </div>
+        <div className="flex items-center gap-4 text-slate-300">
+          <a href="https://www.hpyengineering.com" target="_blank" rel="noreferrer" className="hover:text-sky-300"><Globe2 className="h-4 w-4" /></a>
+          <a href="https://www.hpyengineering.com" target="_blank" rel="noreferrer" className="hover:text-sky-300"><ExternalLink className="h-4 w-4" /></a>
+        </div>
+      </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+      <nav className="bg-white border-b border-slate-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            <Link to="/" className="flex items-center gap-3">
+              <div className="bg-sky-600 text-white p-3 rounded-xl shadow-lg shadow-sky-500/20">
+                <Hammer className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="font-display text-lg font-black text-slate-950 uppercase tracking-[0.3em]">HPY</p>
+                <p className="text-xs uppercase tracking-[0.25em] text-slate-500">Engineering</p>
+              </div>
+            </Link>
+
+            <div className="hidden xl:flex items-center gap-8">
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.path || (link.path === '/about#industries' && location.pathname === '/about');
+                return (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    className={`text-sm font-semibold tracking-[0.18em] transition-colors duration-200 ${
+                      isActive ? 'text-sky-600' : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className="flex items-center gap-4">
+              {isAuthenticated && (
+                <Link
+                  to="/admin/dashboard"
+                  className="hidden md:inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100"
+                >
+                  <LayoutDashboard className="h-4 w-4" />
+                  Dashboard
+                </Link>
+              )}
+              <Link
+                to="/quote"
+                className="inline-flex items-center gap-2 rounded-full bg-sky-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-sky-500/20 transition hover:bg-sky-700"
+              >
+                Get a Quote
+              </Link>
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="md:hidden inline-flex items-center justify-center rounded-full bg-slate-900 p-3 text-white shadow-lg shadow-slate-900/20"
+              >
+                {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className={`md:hidden bg-white border-t border-slate-200 transition-max-height duration-300 overflow-hidden ${isOpen ? 'max-h-[600px]' : 'max-h-0'}`}>
+          <div className="px-4 py-5 space-y-2">
             {navLinks.map((link) => {
-              const isActive = location.pathname === link.path;
+              const isActive = location.pathname === link.path || (link.path === '/about#industries' && location.pathname === '/about');
               return (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`text-sm font-semibold uppercase tracking-wider transition-colors duration-200 hover:text-industrial-orange ${
-                    isActive ? 'text-industrial-orange' : 'text-industrial-light'
+                  onClick={() => setIsOpen(false)}
+                  className={`block rounded-2xl px-4 py-3 text-sm font-semibold tracking-[0.15em] transition ${
+                    isActive ? 'bg-sky-50 text-sky-700' : 'text-slate-700 hover:bg-slate-50'
                   }`}
                 >
                   {link.name}
                 </Link>
               );
             })}
-          </div>
-
-          {/* Action Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
             {isAuthenticated && (
               <Link
                 to="/admin/dashboard"
-                className="flex items-center space-x-1 px-3 py-2 rounded-md bg-industrial-steel/50 border border-industrial-border text-xs font-semibold text-industrial-light hover:bg-industrial-steel hover:text-industrial-orange transition-colors"
-                title="Admin Panel"
-              >
-                <LayoutDashboard className="h-4 w-4" />
-                <span>Dashboard</span>
-              </Link>
-            )}
-            <Link
-              to="/quote"
-              className="inline-flex items-center justify-center px-5 py-2.5 rounded-md bg-industrial-orange hover:bg-industrial-orange-hover text-industrial-charcoal font-bold text-sm tracking-wider uppercase transition-all shadow-md shadow-industrial-orange/20 hover:scale-[1.02]"
-            >
-              Request a Quote
-            </Link>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-3">
-            {isAuthenticated && (
-              <Link
-                to="/admin/dashboard"
-                className="p-2 text-industrial-light hover:text-industrial-orange"
-              >
-                <LayoutDashboard className="h-5 w-5" />
-              </Link>
-            )}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-md bg-black text-white hover:text-industrial-orange focus:outline-none focus:ring-2 focus:ring-industrial-orange"
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <div
-        className={`md:hidden fixed inset-0 z-50 bg-transparent transition-opacity duration-300 ${
-          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
-        onClick={() => setIsOpen(false)}
-      >
-        <div
-          className={`absolute inset-y-0 right-0 w-72 bg-black shadow-none border-l border-black/0 h-screen z-50 transform transition-transform duration-300 ease-in-out ${
-            isOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
-          onClick={(event) => event.stopPropagation()}
-          style={{ backgroundColor: '#000000' }}
-        >
-          <div className="p-6 flex flex-col h-full justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-8">
-                <span className="font-display font-black tracking-wider text-industrial-light text-sm">
-                  MENU
-                </span>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="p-2 rounded-md text-industrial-light hover:text-industrial-orange focus:outline-none"
-                >
-                  <X className="h-6 w-6" />
-                </button>
-              </div>
-
-              <div className="flex flex-col space-y-4">
-                {navLinks.map((link) => {
-                  const isActive = location.pathname === link.path;
-                  return (
-                    <Link
-                      key={link.name}
-                      to={link.path}
-                      onClick={() => setIsOpen(false)}
-                      className={`text-base font-bold uppercase tracking-wider py-3 px-1 transition-colors duration-200 ${
-                        isActive
-                          ? 'text-industrial-orange border-l-2 border-industrial-orange pl-4'
-                          : 'text-industrial-light pl-4 hover:text-industrial-orange'
-                      }`}
-                    >
-                      {link.name}
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              {isAuthenticated && (
-                <Link
-                  to="/admin/dashboard"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center space-x-2 w-full py-3 rounded-md bg-industrial-steel/50 border border-industrial-border text-sm font-bold text-industrial-light"
-                >
-                  <LayoutDashboard className="h-5 w-5 text-industrial-orange" />
-                  <span>Admin Dashboard</span>
-                </Link>
-              )}
-              <Link
-                to="/quote"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center justify-center w-full py-3 rounded-md bg-industrial-orange hover:bg-industrial-orange-hover text-industrial-charcoal font-black text-sm tracking-widest uppercase transition-all shadow-lg shadow-industrial-orange/20"
+                className="flex items-center justify-center rounded-full bg-slate-900 px-4 py-3 text-sm font-semibold text-white"
               >
-                Request a Quote
+                Dashboard
               </Link>
-            </div>
+            )}
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
 };
 

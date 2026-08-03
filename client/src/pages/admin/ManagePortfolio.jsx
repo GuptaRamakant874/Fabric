@@ -336,7 +336,7 @@ const ManagePortfolio = () => {
                     type="text"
                     value={client}
                     onChange={(e) => setClient(e.target.value)}
-                    placeholder="e.g. Vance Construction"
+                    placeholder="e.g. HPY Pharmaceutical Rack"
                     className="w-full bg-industrial-charcoal border border-industrial-border rounded px-3 py-2 text-sm text-industrial-light focus:border-industrial-orange focus:outline-none"
                   />
                 </div>

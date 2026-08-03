@@ -10,16 +10,16 @@ const About = () => {
   ];
 
   const timeline = [
-    { year: '2008', title: 'Company Founded', desc: 'Vance Metal Fabrication opened a single 2,000 sq ft workshop in Houston with three welders and one manual shear press.' },
-    { year: '2013', title: 'Expanded Facility & Laser CNC', desc: 'Acquired a new 12,000 sq ft facility and purchased our first multi-axis CNC laser cutting station to offer high-precision sheet shaping.' },
-    { year: '2019', title: 'AISC Certification & Heavy Structural', desc: 'Achieved American Institute of Steel Construction (AISC) certification, prompting expansion into multi-ton structural steel beams and columns.' },
-    { year: '2024', title: 'Full Industrial Integration', desc: 'Transitioned to our current 45,000 sq ft headquarters, handling automated powder coating, sandblasting, and structural erections in-house.' },
+    { year: '2008', title: 'Company Founded', desc: 'HPY Engineering opened a single 2,000 sq ft workshop focused on stainless steel assembly, welding, and cleanroom readiness.' },
+    { year: '2013', title: 'Expanded Facility & Laser CNC', desc: 'Acquired a new 12,000 sq ft facility and added high-precision multi-axis CNC laser cutting to support pharmaceutical-grade fabrications.' },
+    { year: '2019', title: 'SS 304/316 Shop Certification', desc: 'Gained process certifications for stainless steel cleanroom products, enabling production for pharma, biotech, and hospital applications.' },
+    { year: '2024', title: 'Full Industry Integration', desc: 'Expanded into our current headquarters with powder coating, assembly, and GMP-compliant fabrication under one roof.' },
   ];
 
   const leaders = [
-    { name: 'Marcus Vance', role: 'President & Founder', bio: 'With over 25 years of hands-on structural welding and site layout experience, Marcus drives our engineering standards and client relationships.', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400' },
-    { name: 'Engineering Director', role: 'Sarah Lindqvist, P.E.', bio: 'Sarah leads our CAD detailing and drawing verification team, ensuring all client spec drawings comply with local building safety codes.', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400' },
-    { name: 'QC & Safety Inspector', role: 'Thomas Miller', bio: 'Thomas is our certified welding inspector (CWI). He implements our zero-defect policy and conducts OSHA safety checks daily.', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400' }
+    { name: 'Hardik Patel', role: 'Founder & Managing Director', bio: 'Hardik leads strategic planning and production oversight for all cleanroom and pharmaceutical fabrication projects.', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400' },
+    { name: 'Parth Yadav', role: 'Engineering Lead', bio: 'Parth coordinates CAD-to-shop workflows and verifies each drawing against manufacturing and GMP standards.', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400' },
+    { name: 'Meera Shah', role: 'QC & Safety Inspector', bio: 'Meera owns our shop-floor quality audits and ensures compliance with welding inspections and cleanroom cleanliness checks.', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400' }
   ];
 
   return (
@@ -29,7 +29,7 @@ const About = () => {
         <div className="absolute inset-0 industrial-grid opacity-10"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="font-display font-black text-3xl sm:text-5xl text-industrial-light uppercase tracking-tight">
-            About <span className="text-industrial-orange">Vance Steel</span>
+            About <span className="text-industrial-orange">HPY Engineering</span>
           </h1>
           <p className="mt-4 text-sm sm:text-base text-industrial-muted max-w-2xl mx-auto">
             Learn about our fabrication standards, strict safety policies, and the team driving engineering excellence since 2008.
@@ -96,7 +96,7 @@ const About = () => {
                 Certifications & <span className="text-industrial-orange">Industry Standards</span>
               </h2>
               <p className="text-sm text-industrial-muted leading-relaxed">
-                Vance Metal maintains standard certifications to bid and execute complex governmental and heavy commercial construction contracts. Our shop is audited annually to verify compliance.
+                HPY Engineering maintains standard certifications to bid and execute complex pharmaceutical and industrial fabrication contracts. Our shop is audited annually to verify compliance.
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

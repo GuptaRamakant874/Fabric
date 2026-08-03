@@ -19,6 +19,7 @@ import Login from './pages/admin/Login';
 import AdminLayout from './pages/admin/AdminLayout';
 import Dashboard from './pages/admin/Dashboard';
 import ManagePortfolio from './pages/admin/ManagePortfolio';
+import ManageProducts from './pages/admin/ManageProducts';
 import ManageServices from './pages/admin/ManageServices';
 import ManageQuotes from './pages/admin/ManageQuotes';
 import ManageMessages from './pages/admin/ManageMessages';
@@ -61,6 +62,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="portfolio" element={<ManagePortfolio />} />
+            <Route path="products" element={<ManageProducts />} />
             <Route path="services" element={<ManageServices />} />
             <Route path="quotes" element={<ManageQuotes />} />
             <Route path="messages" element={<ManageMessages />} />

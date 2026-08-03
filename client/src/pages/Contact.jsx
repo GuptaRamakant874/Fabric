@@ -47,23 +47,23 @@ const Contact = () => {
     {
       icon: <Phone className="h-6 w-6 text-industrial-orange" />,
       title: 'Phone Number',
-      value: '+1 (800) 555-3227',
-      link: 'tel:+18005553227',
-      desc: 'Toll-free, Mon-Fri 7 AM - 5 PM'
+      value: '+91 63588 90888',
+      link: 'tel:+916358890888',
+      desc: 'Monday - Saturday, 8 AM - 6 PM IST'
     },
     {
       icon: <Mail className="h-6 w-6 text-industrial-orange" />,
       title: 'Email Address',
-      value: 'info@vancesteeel.com',
-      link: 'mailto:info@vancesteeel.com',
-      desc: 'Bid invites & drawings submissions'
+      value: 'info@hpyengineering.com',
+      link: 'mailto:info@hpyengineering.com',
+      desc: 'Request quotes, drawings, and product support'
     },
     {
       icon: <MapPin className="h-6 w-6 text-industrial-orange" />,
-      title: 'Main Office & Shop',
-      value: '102 Industrial Parkway, TX 75001',
-      link: 'https://maps.google.com',
-      desc: 'Sector 4, Heavy Engineering Zone'
+      title: 'Office & Shop',
+      value: 'GIDC, Gandhinagar – 382021',
+      link: 'https://www.google.com/maps?q=GIDC+Gandhinagar&output=embed',
+      desc: 'Manufacturing and customer service headquarters'
     }
   ];
 
@@ -77,7 +77,7 @@ const Contact = () => {
             Contact <span className="text-industrial-orange">Us</span>
           </h1>
           <p className="mt-4 text-sm sm:text-base text-industrial-muted max-w-2xl mx-auto">
-            Get in touch with Vance Steel. Visit our shop, call our project managers, or send general inquiries below.
+            Get in touch with HPY Engineering. Visit our shop, call our project managers, or send general inquiries below.
           </p>
         </div>
       </section>
@@ -243,8 +243,8 @@ const Contact = () => {
       {/* Embedded Map Section */}
       <section className="h-[400px] border-t border-industrial-border/60 relative">
         <iframe
-          title="Vance Steel Shop Location Map"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115681.29592731278!2d-95.47466736209562!3d29.76042672535787!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640b8b4488d8501%3A0xca0d02def365053b!2sHouston%2C%20TX!5e0!3m2!1sen!2sus!4v1703058823528!5m2!1sen!2sus"
+          title="HPY Engineering Shop Location Map"
+          src="https://www.google.com/maps?q=GIDC+Gandhinagar&output=embed"
           width="100%"
           height="100%"
           style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) contrast(110%)' }}

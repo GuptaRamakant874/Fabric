@@ -4,6 +4,7 @@ import {
   LayoutDashboard,
   Briefcase,
   Wrench,
+  Package,
   FileText,
   Mail,
   Star,
@@ -37,6 +38,7 @@ const AdminLayout = () => {
   const menuItems = [
     { name: 'Dashboard', path: '/admin/dashboard', icon: <LayoutDashboard className="h-5 w-5" /> },
     { name: 'Portfolio CRUD', path: '/admin/portfolio', icon: <Briefcase className="h-5 w-5" /> },
+    { name: 'Products CRUD', path: '/admin/products', icon: <Package className="h-5 w-5" /> },
     { name: 'Services CRUD', path: '/admin/services', icon: <Wrench className="h-5 w-5" /> },
     { name: 'Quote Requests', path: '/admin/quotes', icon: <FileText className="h-5 w-5" /> },
     { name: 'Contact Messages', path: '/admin/messages', icon: <Mail className="h-5 w-5" /> },
@@ -50,12 +52,12 @@ const AdminLayout = () => {
         <div>
           {/* Logo / Header */}
           <div className="p-6 border-b border-industrial-border/60 flex items-center space-x-2">
-            <div className="bg-industrial-orange text-industrial-charcoal p-1.5 rounded text-left">
+            <div className="bg-sky-600 text-white p-1.5 rounded text-left">
               <Hammer className="h-5 w-5" />
             </div>
             <div>
-              <span className="font-display font-black text-sm tracking-wider block">VANCE PANEL</span>
-              <span className="text-[10px] text-industrial-orange font-bold tracking-widest block uppercase mt-0.5">Control Panel</span>
+              <span className="font-display font-black text-sm tracking-wider block">HPY PANEL</span>
+              <span className="text-[10px] text-sky-300 font-bold tracking-widest block uppercase mt-0.5">Control Panel</span>
             </div>
           </div>
 
@@ -117,10 +119,10 @@ const AdminLayout = () => {
         {/* Mobile Nav Header */}
         <header className="md:hidden bg-industrial-gray border-b border-industrial-border px-6 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
-            <div className="bg-industrial-orange text-industrial-charcoal p-1.5 rounded">
+            <div className="bg-sky-600 text-white p-1.5 rounded">
               <Hammer className="h-4 w-4" />
             </div>
-            <span className="font-display font-black text-sm tracking-wider">VANCE ADMIN</span>
+            <span className="font-display font-black text-sm tracking-wider">HPY ADMIN</span>
           </Link>
           <div className="flex items-center gap-4">
             <button
