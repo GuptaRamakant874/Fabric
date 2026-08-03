@@ -5,21 +5,8 @@ import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const { isAuthenticated } = useAuth();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -35,13 +22,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-industrial-charcoal/90 backdrop-blur-md border-b border-industrial-border/60 py-3 shadow-lg'
-          : 'bg-transparent py-5'
-      }`}
-    >
+    <nav className="fixed top-0 left-0 right-0 z-40 bg-industrial-charcoal/90 backdrop-blur-md border-b border-industrial-border/60 py-3 shadow-lg transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -109,7 +90,7 @@ const Navbar = () => {
             )}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-md text-industrial-light hover:text-industrial-orange focus:outline-none"
+              className="p-2 rounded-md bg-black text-white hover:text-industrial-orange focus:outline-none focus:ring-2 focus:ring-industrial-orange"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -119,59 +100,72 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden fixed inset-y-0 right-0 w-64 bg-industrial-gray border-l border-industrial-border z-50 transform transition-transform duration-300 ease-in-out shadow-2xl ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`md:hidden fixed inset-0 z-50 bg-transparent transition-opacity duration-300 ${
+          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
+        onClick={() => setIsOpen(false)}
       >
-        <div className="p-5 flex flex-col h-full justify-between">
-          <div>
-            <div className="flex items-center justify-between mb-8">
-              <span className="font-display font-black tracking-wider text-industrial-light">MENU</span>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="p-1 rounded-md text-industrial-light hover:text-industrial-orange"
-              >
-                <X className="h-6 w-6" />
-              </button>
+        <div
+          className={`absolute inset-y-0 right-0 w-72 bg-black shadow-none border-l border-black/0 h-screen z-50 transform transition-transform duration-300 ease-in-out ${
+            isOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+          onClick={(event) => event.stopPropagation()}
+          style={{ backgroundColor: '#000000' }}
+        >
+          <div className="p-6 flex flex-col h-full justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-8">
+                <span className="font-display font-black tracking-wider text-industrial-light text-sm">
+                  MENU
+                </span>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-2 rounded-md text-industrial-light hover:text-industrial-orange focus:outline-none"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+
+              <div className="flex flex-col space-y-4">
+                {navLinks.map((link) => {
+                  const isActive = location.pathname === link.path;
+                  return (
+                    <Link
+                      key={link.name}
+                      to={link.path}
+                      onClick={() => setIsOpen(false)}
+                      className={`text-base font-bold uppercase tracking-wider py-3 px-1 transition-colors duration-200 ${
+                        isActive
+                          ? 'text-industrial-orange border-l-2 border-industrial-orange pl-4'
+                          : 'text-industrial-light pl-4 hover:text-industrial-orange'
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
 
-            <div className="flex flex-col space-y-4">
-              {navLinks.map((link) => {
-                const isActive = location.pathname === link.path;
-                return (
-                  <Link
-                    key={link.name}
-                    to={link.path}
-                    onClick={() => setIsOpen(false)}
-                    className={`text-base font-bold uppercase tracking-wider py-2 hover:text-industrial-orange transition-colors ${
-                      isActive ? 'text-industrial-orange border-l-2 border-industrial-orange pl-2' : 'text-industrial-light pl-2'
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            {isAuthenticated && (
+            <div className="space-y-4">
+              {isAuthenticated && (
+                <Link
+                  to="/admin/dashboard"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-center space-x-2 w-full py-3 rounded-md bg-industrial-steel/50 border border-industrial-border text-sm font-bold text-industrial-light"
+                >
+                  <LayoutDashboard className="h-5 w-5 text-industrial-orange" />
+                  <span>Admin Dashboard</span>
+                </Link>
+              )}
               <Link
-                to="/admin/dashboard"
+                to="/quote"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center justify-center space-x-2 w-full py-3 rounded-md bg-industrial-steel/50 border border-industrial-border font-bold text-sm text-industrial-light"
+                className="flex items-center justify-center w-full py-3 rounded-md bg-industrial-orange hover:bg-industrial-orange-hover text-industrial-charcoal font-black text-sm tracking-widest uppercase transition-all shadow-lg shadow-industrial-orange/20"
               >
-                <LayoutDashboard className="h-5 w-5 text-industrial-orange" />
-                <span>Admin Dashboard</span>
+                Request a Quote
               </Link>
-            )}
-            <Link
-              to="/quote"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center justify-center w-full py-3 rounded-md bg-industrial-orange hover:bg-industrial-orange-hover text-industrial-charcoal font-black text-sm tracking-widest uppercase transition-all shadow-lg"
-            >
-              Request a Quote
-            </Link>
+            </div>
           </div>
         </div>
       </div>
