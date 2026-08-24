@@ -46,36 +46,36 @@ const AdminLayout = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-industrial-charcoal flex text-industrial-light">
+    <div className="min-h-screen bg-slate-950 flex text-slate-100 selection:bg-sky-500 selection:text-slate-950">
       {/* Sidebar Navigation */}
-      <aside className="w-64 bg-industrial-gray border-r border-industrial-border flex flex-col justify-between shrink-0 hidden md:flex">
+      <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col justify-between shrink-0 hidden md:flex">
         <div>
           {/* Logo / Header */}
-          <div className="p-6 border-b border-industrial-border/60 flex items-center space-x-2">
-            <div className="bg-sky-600 text-white p-1.5 rounded text-left">
+          <div className="p-6 border-b border-slate-800 flex items-center space-x-3">
+            <div className="bg-sky-500 text-slate-950 p-2 rounded-xl shadow-lg shadow-sky-500/20">
               <Hammer className="h-5 w-5" />
             </div>
-            <div>
-              <span className="font-display font-black text-sm tracking-wider block">HPY PANEL</span>
-              <span className="text-[10px] text-sky-300 font-bold tracking-widest block uppercase mt-0.5">Control Panel</span>
+            <div className="text-left">
+              <span className="font-display font-black text-sm tracking-wide block text-white">HPY Admin</span>
+              <span className="text-[10px] text-sky-400 font-bold tracking-wider block mt-0.5">Control Center</span>
             </div>
           </div>
 
           {/* Navigation Links */}
-          <nav className="p-4 space-y-1">
+          <nav className="p-4 space-y-1.5 text-left">
             {menuItems.map((item) => {
               const isActive = location.pathname === item.path;
               return (
                 <Link
                   key={item.name}
                   to={item.path}
-                  className={`flex items-center space-x-3 px-4 py-3 rounded text-sm font-semibold transition-colors duration-150 ${
+                  className={`flex items-center space-x-3 px-4 py-3 rounded-xl text-xs font-bold tracking-wide transition-all duration-150 ${
                     isActive
-                      ? 'bg-industrial-orange text-industrial-charcoal font-bold'
-                      : 'hover:bg-industrial-steel/40 text-industrial-muted hover:text-industrial-light'
+                      ? 'bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/25'
+                      : 'text-slate-300 hover:bg-slate-800 hover:text-white'
                   }`}
                 >
-                  {item.icon}
+                  <span className={isActive ? 'text-slate-950' : 'text-sky-400'}>{item.icon}</span>
                   <span>{item.name}</span>
                 </Link>
               );
@@ -84,31 +84,31 @@ const AdminLayout = () => {
         </div>
 
         {/* User Block & Logout */}
-        <div className="p-4 border-t border-industrial-border/60 space-y-2">
+        <div className="p-4 border-t border-slate-800 space-y-3 text-left">
           {/* Public Link */}
           <Link
             to="/"
             target="_blank"
-            className="flex items-center justify-between w-full px-4 py-2.5 rounded border border-industrial-border hover:border-industrial-orange/30 text-xs font-semibold text-industrial-muted hover:text-industrial-orange transition-colors"
+            className="flex items-center justify-between w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-950/60 hover:border-sky-400 text-xs font-bold text-slate-300 hover:text-sky-400 transition-colors"
           >
-            <span className="flex items-center gap-1.5"><ExternalLink className="h-3.5 w-3.5" /> View Main Site</span>
+            <span className="flex items-center gap-2"><ExternalLink className="h-3.5 w-3.5 text-sky-400" /> View Main Site</span>
           </Link>
           
-          <div className="flex items-center space-x-3 px-4 py-2 text-xs">
-            <div className="bg-industrial-steel p-1.5 rounded-full">
-              <User className="h-4 w-4 text-industrial-orange" />
+          <div className="flex items-center space-x-3 px-4 py-2 text-xs bg-slate-950/40 rounded-xl border border-slate-800/80">
+            <div className="bg-slate-800 p-2 rounded-lg text-sky-400 border border-slate-700">
+              <User className="h-4 w-4" />
             </div>
             <div className="truncate text-left">
-              <p className="font-bold text-industrial-light leading-none">{user.name}</p>
-              <span className="text-[10px] text-industrial-muted mt-1 block">Administrator</span>
+              <p className="font-bold text-white leading-none truncate">{user.name}</p>
+              <span className="text-[10px] text-slate-400 font-semibold mt-1 block">Administrator</span>
             </div>
           </div>
 
           <button
             onClick={logout}
-            className="flex items-center space-x-3 w-full px-4 py-3 rounded text-sm font-semibold hover:bg-red-500/10 text-red-400 hover:text-red-300 transition-colors"
+            className="flex items-center space-x-3 w-full px-4 py-3 rounded-xl text-xs font-bold tracking-wide bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 border border-red-500/20 transition-colors"
           >
-            <LogOut className="h-5 w-5" />
+            <LogOut className="h-4 w-4" />
             <span>Logout</span>
           </button>
         </div>
@@ -117,36 +117,36 @@ const AdminLayout = () => {
       {/* Main Content Pane */}
       <div className="flex-grow flex flex-col overflow-x-hidden min-h-screen">
         {/* Mobile Nav Header */}
-        <header className="md:hidden bg-industrial-gray border-b border-industrial-border px-6 py-4 flex items-center justify-between">
+        <header className="md:hidden bg-slate-900 border-b border-slate-800 px-6 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
-            <div className="bg-sky-600 text-white p-1.5 rounded">
+            <div className="bg-sky-500 text-slate-950 p-1.5 rounded-lg">
               <Hammer className="h-4 w-4" />
             </div>
-            <span className="font-display font-black text-sm tracking-wider">HPY ADMIN</span>
+            <span className="font-display font-black text-sm tracking-wide text-white">HPY Admin</span>
           </Link>
           <div className="flex items-center gap-4">
             <button
               onClick={logout}
-              className="p-1 rounded text-red-400 hover:text-red-300 focus:outline-none"
+              className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:text-red-300 border border-red-500/20 focus:outline-none"
               title="Logout"
             >
-              <LogOut className="h-5 w-5" />
+              <LogOut className="h-4 w-4" />
             </button>
           </div>
         </header>
 
         {/* Scrollable Sub-Routes Outlet Container */}
         <main className="p-6 md:p-10 flex-grow max-w-7xl w-full mx-auto">
-          {/* Mobile Bottom Navigation Bar (just in case they use mobile) */}
-          <div className="md:hidden flex overflow-x-auto gap-2 bg-industrial-gray/60 p-2 rounded-lg border border-industrial-border/60 mb-6 select-none">
+          {/* Mobile Bottom Navigation Bar */}
+          <div className="md:hidden flex overflow-x-auto gap-2 bg-slate-900 p-2 rounded-xl border border-slate-800 mb-6 select-none">
             {menuItems.map((item) => {
               const isActive = location.pathname === item.path;
               return (
                 <Link
                   key={item.name}
                   to={item.path}
-                  className={`px-3 py-1.5 rounded text-xs font-semibold whitespace-nowrap ${
-                    isActive ? 'bg-industrial-orange text-industrial-charcoal font-bold' : 'text-industrial-muted bg-industrial-steel/20'
+                  className={`px-3 py-2 rounded-lg text-xs font-bold tracking-wide whitespace-nowrap ${
+                    isActive ? 'bg-sky-500 text-slate-950 font-black' : 'text-slate-300 bg-slate-950/60'
                   }`}
                 >
                   {item.name}

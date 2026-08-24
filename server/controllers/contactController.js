@@ -1,4 +1,64 @@
 const ContactMessage = require('../models/ContactMessage');
+const nodemailer = require('nodemailer');
+
+const sendContactEmail = async (messageData) => {
+  const isEmailConfigured = !!(
+    process.env.SMTP_HOST &&
+    process.env.SMTP_PORT &&
+    process.env.SMTP_USER &&
+    process.env.SMTP_PASS &&
+    process.env.ADMIN_EMAIL
+  );
+
+  if (!isEmailConfigured) {
+    console.log('\n=========================================');
+    console.log('[CONTACT EMAIL MOCK] SMTP configuration not set. Console Log Details:');
+    console.log(`TO: ${process.env.ADMIN_EMAIL || 'admin@fabsteel.com'}`);
+    console.log(`SUBJECT: New Contact Message from ${messageData.name}`);
+    console.log(`BODY:
+      Name: ${messageData.name}
+      Email: ${messageData.email}
+      Phone: ${messageData.phone || 'N/A'}
+      Message: ${messageData.message}
+    `);
+    console.log('=========================================\n');
+    return;
+  }
+
+  try {
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT),
+      secure: Number(process.env.SMTP_PORT) === 465,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: `"Metal Fab Portal" <${process.env.SMTP_USER}>`,
+      to: process.env.ADMIN_EMAIL,
+      replyTo: messageData.email,
+      subject: `[New Contact Message] ${messageData.name}`,
+      html: `
+        <h2>New Contact Message</h2>
+        <hr />
+        <p><strong>Name:</strong> ${messageData.name}</p>
+        <p><strong>Email:</strong> ${messageData.email}</p>
+        <p><strong>Phone:</strong> ${messageData.phone || 'N/A'}</p>
+        <p><strong>Message:</strong></p>
+        <p style="white-space: pre-wrap; background: #f4f4f4; padding: 10px; border-radius: 4px;">${messageData.message}</p>
+        <br />
+        <p>This message was sent from the website contact form.</p>
+      `,
+    });
+
+    console.log(`Contact notification email successfully sent to admin: ${process.env.ADMIN_EMAIL}`);
+  } catch (error) {
+    console.error('Nodemailer error sending contact message email:', error.message);
+  }
+};
 
 // @desc    Submit a contact message
 // @route   POST /api/contact
@@ -18,6 +78,8 @@ const submitContactMessage = async (req, res, next) => {
       phone,
       message,
     });
+
+    sendContactEmail(newMessage);
 
     res.status(201).json({
       success: true,

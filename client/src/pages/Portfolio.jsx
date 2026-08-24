@@ -36,15 +36,15 @@ const Portfolio = () => {
   }, [activeCategory]);
 
   return (
-    <div className="pt-20">
+    <div className="bg-slate-950 text-slate-100 min-h-screen">
       {/* Portfolio Header */}
-      <section className="bg-industrial-gray border-b border-industrial-border/60 py-16 text-center relative overflow-hidden">
-        <div className="absolute inset-0 industrial-grid opacity-10"></div>
+      <section className="bg-slate-900 border-b border-slate-800 py-16 text-center relative overflow-hidden">
+        <div className="absolute inset-0 industrial-grid opacity-15"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="font-display font-black text-3xl sm:text-5xl text-industrial-light uppercase tracking-tight">
-            Our <span className="text-industrial-orange">Portfolio</span>
+          <h1 className="font-display font-black text-3xl sm:text-5xl text-white tracking-tight">
+            Our <span className="text-sky-400">Portfolio</span>
           </h1>
-          <p className="mt-4 text-sm sm:text-base text-industrial-muted max-w-2xl mx-auto">
+          <p className="mt-4 text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
             Browse our completed fabrication projects across industrial complexes, commercial plazas, and custom residential steel designs.
           </p>
         </div>
@@ -52,16 +52,16 @@ const Portfolio = () => {
 
       {/* Tabs & Gallery Section */}
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Category Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-12 border-b border-industrial-border/40 pb-6">
+        {/* Category Tabs in Title Case */}
+        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-12 border-b border-slate-800 pb-6">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2.5 rounded font-display font-bold text-xs uppercase tracking-wider transition-all cursor-pointer ${
+              className={`px-5 py-2.5 rounded-xl font-display font-bold text-xs sm:text-sm tracking-wide transition-all cursor-pointer ${
                 activeCategory === cat
-                  ? 'bg-industrial-orange text-industrial-charcoal font-black scale-[1.02]'
-                  : 'bg-industrial-steel/40 border border-industrial-border/80 text-industrial-light hover:bg-industrial-steel hover:text-industrial-orange'
+                  ? 'bg-sky-500 text-slate-950 font-black scale-[1.02] shadow-lg shadow-sky-500/25'
+                  : 'bg-slate-900 border border-slate-700/80 text-slate-300 hover:bg-slate-800 hover:text-white hover:border-slate-600'
               }`}
             >
               {cat}
@@ -73,7 +73,7 @@ const Portfolio = () => {
         {loading ? (
           <LoadingSpinner />
         ) : error ? (
-          <div className="text-center text-red-500 font-bold p-8 bg-red-500/10 border border-red-500/20 rounded-lg max-w-xl mx-auto">
+          <div className="text-center text-red-400 font-bold p-8 bg-red-500/10 border border-red-500/20 rounded-2xl max-w-xl mx-auto">
             {error}
           </div>
         ) : projects.length > 0 ? (

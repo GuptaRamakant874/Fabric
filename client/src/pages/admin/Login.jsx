@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Hammer, Lock, Mail, ShieldAlert, CheckCircle } from 'lucide-react';
+import { Hammer, Lock, Mail, ShieldAlert } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 const loginSchema = z.object({
@@ -49,48 +49,48 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-industrial-charcoal flex items-center justify-center px-4 relative overflow-hidden pt-12">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4 relative overflow-hidden text-slate-100">
       {/* Decorative Grid Overlay */}
       <div className="absolute inset-0 industrial-grid opacity-20 pointer-events-none"></div>
 
-      <div className="max-w-md w-full z-10 space-y-8">
+      <div className="max-w-md w-full z-10 space-y-8 py-12">
         {/* Brand Header */}
         <div className="text-center">
-          <div className="inline-flex bg-industrial-orange text-industrial-charcoal p-3 rounded-xl mb-3 shadow-lg">
+          <div className="inline-flex bg-sky-500 text-slate-950 p-3.5 rounded-2xl mb-3 shadow-xl shadow-sky-500/25">
             <Hammer className="h-8 w-8" />
           </div>
-          <h2 className="font-display font-black text-2xl tracking-wider text-industrial-light uppercase">
-            HPY ENGINEERING PORTAL
+          <h2 className="font-display font-black text-2xl tracking-wide text-white">
+            HPY Engineering Portal
           </h2>
-          <p className="text-xs text-industrial-muted uppercase tracking-widest mt-1">
-            Administrative Access
+          <p className="text-xs text-sky-400 font-bold tracking-wider mt-1">
+            Administrative Control Panel
           </p>
         </div>
 
         {/* Login Card */}
-        <div className="glass-panel p-8 rounded-xl shadow-2xl space-y-6">
-          <h3 className="font-display font-bold text-lg text-industrial-light text-left">
-            Sign In to Dashboard
+        <div className="bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-2xl space-y-6 text-left">
+          <h3 className="font-display font-bold text-lg text-white">
+            Sign In To Dashboard
           </h3>
 
           {errorMessage && (
-            <div className="p-3.5 rounded bg-red-500/10 border border-red-500/20 text-red-500 text-xs font-semibold flex items-center gap-2">
+            <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold flex items-center gap-2">
               <ShieldAlert className="h-5 w-5 shrink-0" />
               <span>{errorMessage}</span>
             </div>
           )}
 
           {/* Quick seeded instructions helper */}
-          <div className="p-3 bg-industrial-steel/40 border border-industrial-border/60 rounded text-[11px] text-industrial-muted space-y-1 text-left">
-            <p className="font-bold text-industrial-orange">Demo Credentials:</p>
-            <p>Email: <span className="font-mono text-industrial-light">{defaultEmail}</span></p>
-            <p>Password: <span className="font-mono text-industrial-light">{defaultPass}</span></p>
-          </div>
+          {/* <div className="p-3.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-300 space-y-1.5">
+            <p className="font-bold text-sky-400">Demo Credentials:</p>
+            <p>Email: <span className="font-mono text-white font-semibold">{defaultEmail}</span></p>
+            <p>Password: <span className="font-mono text-white font-semibold">{defaultPass}</span></p>
+          </div> */}
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {/* Email field */}
-            <div className="text-left">
-              <label className="block text-[10px] font-bold uppercase tracking-wider text-industrial-muted mb-1.5">
+            <div>
+              <label className="block text-xs font-bold text-slate-200 mb-1.5">
                 Admin Email Address
               </label>
               <div className="relative">
@@ -98,18 +98,18 @@ const Login = () => {
                   type="email"
                   {...register('email')}
                   placeholder="admin@fabsteel.com"
-                  className="w-full bg-industrial-charcoal border border-industrial-border/60 rounded pl-10 pr-4 py-2.5 text-sm text-industrial-light focus:border-industrial-orange focus:outline-none"
+                  className="w-full bg-slate-950 border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:border-sky-400 focus:ring-2 focus:ring-sky-500/25 focus:outline-none transition-colors"
                 />
-                <Mail className="absolute left-3.5 top-3.5 h-4 w-4 text-industrial-muted" />
+                <Mail className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-400" />
               </div>
               {errors.email && (
-                <p className="mt-1 text-xs text-red-500 font-semibold">{errors.email.message}</p>
+                <p className="mt-1 text-xs text-red-400 font-semibold">{errors.email.message}</p>
               )}
             </div>
 
             {/* Password field */}
-            <div className="text-left">
-              <label className="block text-[10px] font-bold uppercase tracking-wider text-industrial-muted mb-1.5">
+            <div>
+              <label className="block text-xs font-bold text-slate-200 mb-1.5">
                 Secret Password
               </label>
               <div className="relative">
@@ -117,12 +117,12 @@ const Login = () => {
                   type="password"
                   {...register('password')}
                   placeholder="••••••••"
-                  className="w-full bg-industrial-charcoal border border-industrial-border/60 rounded pl-10 pr-4 py-2.5 text-sm text-industrial-light focus:border-industrial-orange focus:outline-none"
+                  className="w-full bg-slate-950 border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:border-sky-400 focus:ring-2 focus:ring-sky-500/25 focus:outline-none transition-colors"
                 />
-                <Lock className="absolute left-3.5 top-3.5 h-4 w-4 text-industrial-muted" />
+                <Lock className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-400" />
               </div>
               {errors.password && (
-                <p className="mt-1 text-xs text-red-500 font-semibold">{errors.password.message}</p>
+                <p className="mt-1 text-xs text-red-400 font-semibold">{errors.password.message}</p>
               )}
             </div>
 
@@ -130,7 +130,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full py-3 rounded bg-industrial-orange hover:bg-industrial-orange-hover text-industrial-charcoal font-black text-xs uppercase tracking-wider transition-all disabled:opacity-50 hover:scale-[1.01]"
+              className="w-full py-3.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-xs tracking-wide transition-all shadow-xl shadow-sky-500/25 disabled:opacity-50 hover:scale-[1.01]"
             >
               {submitting ? 'Verifying...' : 'Authorize Login'}
             </button>

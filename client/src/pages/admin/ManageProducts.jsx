@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, X, Check, ShieldAlert, Package } from 'lucide-react';
+import { Plus, Edit2, Trash2, X, Check, ShieldAlert } from 'lucide-react';
 import API from '../../api';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { resolveAssetUrl } from '../../utils/urls';
@@ -167,29 +167,29 @@ const ManageProducts = () => {
     <div className="space-y-8 text-left">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="font-display font-black text-3xl text-industrial-light uppercase tracking-tight">
-            Manage <span className="text-industrial-orange">Products</span>
+          <h1 className="font-display font-black text-3xl text-white tracking-tight">
+            Manage <span className="text-sky-400">Products</span>
           </h1>
-          <p className="text-sm text-industrial-muted mt-1">
+          <p className="text-sm text-slate-300 mt-1">
             Add or update product catalogue entries used by the frontend product showcase.
           </p>
         </div>
         <button
           onClick={openAddModal}
-          className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded bg-industrial-orange hover:bg-industrial-orange-hover text-industrial-charcoal font-black text-xs uppercase tracking-wider transition-all"
+          className="inline-flex items-center gap-1.5 px-5 py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-xs sm:text-sm tracking-wide transition-all shadow-lg shadow-sky-500/25"
         >
-          <Plus className="h-4.5 w-4.5" /> Add Product
+          <Plus className="h-4 w-4 stroke-[3]" /> Add Product
         </button>
       </div>
 
       {successMsg && (
-        <div className="p-3.5 rounded bg-green-500/10 border border-green-500/20 text-green-400 text-sm font-semibold flex items-center gap-2">
+        <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-sm font-semibold flex items-center gap-2">
           <Check className="h-5 w-5" />
           <span>{successMsg}</span>
         </div>
       )}
       {errorMsg && (
-        <div className="p-3.5 rounded bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-semibold flex items-center gap-2">
+        <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-semibold flex items-center gap-2">
           <ShieldAlert className="h-5 w-5" />
           <span>{errorMsg}</span>
         </div>
@@ -198,11 +198,11 @@ const ManageProducts = () => {
       {loading ? (
         <LoadingSpinner />
       ) : products.length > 0 ? (
-        <div className="glass-panel overflow-hidden rounded-lg shadow-xl">
+        <div className="bg-slate-900 border border-slate-800 overflow-hidden rounded-2xl shadow-xl">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-industrial-charcoal border-b border-industrial-border text-industrial-muted uppercase text-[10px] font-bold tracking-wider">
+                <tr className="bg-slate-950 border-b border-slate-800 text-slate-300 text-xs font-bold tracking-wider">
                   <th className="py-4 px-6">Product</th>
                   <th className="py-4 px-6">Category</th>
                   <th className="py-4 px-6">Featured</th>
@@ -210,20 +210,20 @@ const ManageProducts = () => {
                   <th className="py-4 px-6 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-industrial-border/30 text-sm">
+              <tbody className="divide-y divide-slate-800 text-sm text-slate-200">
                 {products.map((product) => {
                   const imageUrl = resolveAssetUrl(product.image);
                   return (
-                    <tr key={product._id} className="hover:bg-industrial-steel/10 transition-colors">
-                      <td className="py-4 px-6 font-bold text-industrial-light">{product.name}</td>
-                      <td className="py-4 px-6 text-industrial-muted">{product.category}</td>
+                    <tr key={product._id} className="hover:bg-slate-800/50 transition-colors">
+                      <td className="py-4 px-6 font-bold text-white">{product.name}</td>
+                      <td className="py-4 px-6 text-slate-300">{product.category}</td>
                       <td className="py-4 px-6">
                         {product.featured ? (
-                          <span className="text-[10px] uppercase tracking-wider font-bold bg-industrial-orange/15 text-industrial-orange border border-industrial-orange/30 px-2 py-1 rounded">
-                            Yes
+                          <span className="text-[10px] tracking-wide font-bold bg-sky-500/15 text-sky-300 border border-sky-400/30 px-2.5 py-1 rounded-lg">
+                            Featured
                           </span>
                         ) : (
-                          <span className="text-[10px] uppercase tracking-wider font-semibold text-industrial-muted">No</span>
+                          <span className="text-[10px] tracking-wide font-semibold text-slate-500">Standard</span>
                         )}
                       </td>
                       <td className="py-4 px-6">
@@ -231,23 +231,23 @@ const ManageProducts = () => {
                           <img
                             src={imageUrl}
                             alt={product.name}
-                            className="h-12 w-20 object-cover rounded border border-industrial-border"
+                            className="h-12 w-20 object-cover rounded-lg border border-slate-700"
                           />
                         ) : (
-                          <span className="text-[10px] text-industrial-muted">No image</span>
+                          <span className="text-[10px] text-slate-500">No Image</span>
                         )}
                       </td>
                       <td className="py-4 px-6 text-right space-x-2">
                         <button
                           onClick={() => openEditModal(product)}
-                          className="p-2 text-industrial-muted hover:text-industrial-orange border border-industrial-border rounded"
+                          className="p-2 text-slate-300 hover:text-sky-400 hover:bg-slate-800 border border-slate-700 bg-slate-950/60 rounded-lg transition-colors"
                           title="Edit Product"
                         >
                           <Edit2 className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => handleDelete(product._id)}
-                          className="p-2 text-industrial-muted hover:text-red-400 border border-industrial-border rounded"
+                          className="p-2 text-slate-300 hover:text-red-400 hover:bg-slate-800 border border-slate-700 bg-slate-950/60 rounded-lg transition-colors"
                           title="Delete Product"
                         >
                           <Trash2 className="h-4 w-4" />
@@ -261,109 +261,111 @@ const ManageProducts = () => {
           </div>
         </div>
       ) : (
-        <div className="text-center p-12 bg-industrial-gray rounded-lg border border-dashed border-industrial-border text-industrial-muted">
+        <div className="text-center p-12 bg-slate-900 rounded-2xl border border-dashed border-slate-800 text-slate-400">
           No products found. Use the Add Product button to create catalogue entries.
         </div>
       )}
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto">
-          <div className="bg-industrial-gray border border-industrial-border rounded-lg shadow-2xl max-w-3xl w-full">
-            <div className="p-6 border-b border-industrial-border flex items-center justify-between">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 backdrop-blur-md p-4 overflow-y-auto">
+          <div className="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl max-w-3xl w-full my-8 max-h-[90vh] flex flex-col">
+            <div className="p-6 border-b border-slate-800 flex items-center justify-between">
               <div>
-                <h2 className="font-display font-black text-xl text-industrial-light uppercase tracking-tight">
+                <h2 className="font-display font-black text-xl text-white">
                   {editMode ? 'Edit Product' : 'Add Product'}
                 </h2>
-                <p className="text-sm text-industrial-muted mt-1">
+                <p className="text-sm text-slate-300 mt-1">
                   Add full product details, upload a main image and optional gallery.
                 </p>
               </div>
-              <button onClick={() => setIsOpen(false)} className="text-industrial-muted hover:text-industrial-orange p-1">
-                <X className="h-6 w-6" />
+              <button onClick={() => setIsOpen(false)} className="text-slate-400 hover:text-sky-400 p-1.5 rounded-lg hover:bg-slate-800">
+                <X className="h-5 w-5" />
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-6 grid gap-6">
+            <form onSubmit={handleSubmit} className="p-6 grid gap-6 overflow-y-auto text-left">
               <div className="grid gap-4 lg:grid-cols-2">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-industrial-muted mb-1.5">Name</label>
+                  <label className="block text-xs font-bold text-slate-200 mb-1.5">Name</label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-industrial-charcoal border border-industrial-border rounded px-3 py-2 text-sm text-industrial-light focus:border-industrial-orange focus:outline-none"
+                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:border-sky-400 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-industrial-muted mb-1.5">Category</label>
+                  <label className="block text-xs font-bold text-slate-200 mb-1.5">Category</label>
                   <input
                     type="text"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full bg-industrial-charcoal border border-industrial-border rounded px-3 py-2 text-sm text-industrial-light focus:border-industrial-orange focus:outline-none"
+                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:border-sky-400 focus:outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-industrial-muted mb-1.5">Description</label>
+                <label className="block text-xs font-bold text-slate-200 mb-1.5">Description</label>
                 <textarea
                   rows={4}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full bg-industrial-charcoal border border-industrial-border rounded px-3 py-2 text-sm text-industrial-light focus:border-industrial-orange focus:outline-none"
+                  className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:border-sky-400 focus:outline-none resize-none"
                 />
               </div>
 
               <div className="grid gap-4 lg:grid-cols-2">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-industrial-muted mb-1.5">Material</label>
+                  <label className="block text-xs font-bold text-slate-200 mb-1.5">Material</label>
                   <input
                     type="text"
                     value={material}
                     onChange={(e) => setMaterial(e.target.value)}
-                    className="w-full bg-industrial-charcoal border border-industrial-border rounded px-3 py-2 text-sm text-industrial-light focus:border-industrial-orange focus:outline-none"
+                    placeholder="e.g. SS 304 / SS 316"
+                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:border-sky-400 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-industrial-muted mb-1.5">Dimensions</label>
+                  <label className="block text-xs font-bold text-slate-200 mb-1.5">Dimensions</label>
                   <input
                     type="text"
                     value={dimensions}
                     onChange={(e) => setDimensions(e.target.value)}
-                    className="w-full bg-industrial-charcoal border border-industrial-border rounded px-3 py-2 text-sm text-industrial-light focus:border-industrial-orange focus:outline-none"
+                    placeholder="e.g. 1200mm x 600mm x 900mm"
+                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:border-sky-400 focus:outline-none"
                   />
                 </div>
               </div>
 
               <div className="grid gap-4 lg:grid-cols-2">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-industrial-muted mb-1.5">Main Image</label>
+                  <label className="block text-xs font-bold text-slate-200 mb-1.5">Main Image</label>
                   <input
                     type="file"
                     accept="image/*"
                     onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-                    className="w-full text-sm text-industrial-light"
+                    className="w-full text-sm text-slate-300"
                   />
                   {existingImage && !imageFile && (
-                    <div className="mt-3 border border-industrial-border rounded-lg overflow-hidden">
+                    <div className="mt-3 border border-slate-700 rounded-xl overflow-hidden">
                       <img src={resolveAssetUrl(existingImage)} alt="Existing main" className="w-full h-36 object-cover" />
                     </div>
                   )}
                 </div>
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-industrial-muted mb-1.5">Gallery Images</label>
+                  <label className="block text-xs font-bold text-slate-200 mb-1.5">Gallery Images</label>
                   <input
                     type="file"
                     accept="image/*"
                     multiple
                     onChange={handleGalleryChange}
-                    className="w-full text-sm text-industrial-light"
+                    className="w-full text-sm text-slate-300"
                   />
                   {existingGallery.length > 0 && (
                     <div className="mt-3 grid grid-cols-3 gap-2">
                       {existingGallery.map((url, idx) => (
-                        <div key={idx} className="relative rounded-lg overflow-hidden border border-industrial-border">
+                        <div key={idx} className="relative rounded-lg overflow-hidden border border-slate-700">
                           <img src={resolveAssetUrl(url)} alt={`Gallery ${idx + 1}`} className="h-20 w-full object-cover" />
                           <button
                             type="button"
@@ -381,50 +383,50 @@ const ManageProducts = () => {
 
               <div className="grid gap-4 lg:grid-cols-2">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-industrial-muted mb-1.5">Features (one per line)</label>
+                  <label className="block text-xs font-bold text-slate-200 mb-1.5">Features (one per line)</label>
                   <textarea
                     rows={4}
                     value={features}
                     onChange={(e) => setFeatures(e.target.value)}
-                    className="w-full bg-industrial-charcoal border border-industrial-border rounded px-3 py-2 text-sm text-industrial-light focus:border-industrial-orange focus:outline-none"
+                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:border-sky-400 focus:outline-none resize-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-industrial-muted mb-1.5">Specifications (JSON)</label>
+                  <label className="block text-xs font-bold text-slate-200 mb-1.5">Specifications (JSON)</label>
                   <textarea
                     rows={4}
                     value={specifications}
                     onChange={(e) => setSpecifications(e.target.value)}
                     placeholder='{"weight":"2kg","finish":"polished"}'
-                    className="w-full bg-industrial-charcoal border border-industrial-border rounded px-3 py-2 text-sm text-industrial-light focus:border-industrial-orange focus:outline-none"
+                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:border-sky-400 focus:outline-none resize-none font-mono text-xs"
                   />
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
-                <label className="inline-flex items-center gap-2 text-sm text-industrial-light">
+                <label className="inline-flex items-center gap-2 text-sm text-slate-200 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={featured}
                     onChange={(e) => setFeatured(e.target.checked)}
-                    className="rounded border-industrial-border bg-industrial-charcoal text-industrial-orange focus:ring-industrial-orange"
+                    className="rounded border-slate-700 bg-slate-950 text-sky-500 focus:ring-sky-500"
                   />
-                  <span className="text-xs uppercase tracking-wider">Featured product</span>
+                  <span className="text-xs font-bold tracking-wide">Featured Product</span>
                 </label>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center justify-end gap-3 pt-2 border-t border-industrial-border/50">
+              <div className="flex flex-col sm:flex-row items-center justify-end gap-3 pt-4 border-t border-slate-800">
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="px-4 py-2 rounded border border-industrial-border text-sm text-industrial-muted hover:bg-industrial-steel/30"
+                  className="px-4 py-2 rounded-xl border border-slate-700 text-xs font-bold text-slate-300 hover:bg-slate-800 hover:text-white"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded bg-industrial-orange hover:bg-industrial-orange-hover text-industrial-charcoal text-sm font-black uppercase tracking-wider transition-all disabled:cursor-not-allowed disabled:opacity-70"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 text-xs font-black tracking-wide transition-all disabled:cursor-not-allowed disabled:opacity-70 shadow-md shadow-sky-500/25"
                 >
                   {saving ? 'Saving...' : editMode ? 'Update Product' : 'Create Product'}
                 </button>

@@ -10,9 +10,9 @@ const LoadingSpinner = ({ size = 'md', fullScreen = false }) => {
   const spinner = (
     <div className="flex flex-col items-center justify-center space-y-4">
       <div
-        className={`${sizeClasses[size]} animate-spin rounded-full border-industrial-steel border-t-industrial-orange`}
+        className={`${sizeClasses[size]} animate-spin rounded-full border-slate-700 border-t-sky-400`}
       ></div>
-      <p className="text-sm font-semibold tracking-wider uppercase text-industrial-muted">
+      <p className="text-xs font-bold tracking-wide text-slate-300">
         Loading...
       </p>
     </div>
@@ -20,7 +20,7 @@ const LoadingSpinner = ({ size = 'md', fullScreen = false }) => {
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-industrial-charcoal">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 backdrop-blur-sm">
         {spinner}
       </div>
     );

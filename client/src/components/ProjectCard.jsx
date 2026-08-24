@@ -8,17 +8,17 @@ const ProjectCard = ({ project, onClick }) => {
     year: 'numeric',
   });
 
-  // Resolve Image Path (handles absolute URLs from seed and relative ones from local uploads)
+  // Resolve Image Path
   const mainImage = project.images?.[0];
   const imageUrl = resolveAssetUrl(mainImage);
 
   return (
     <div
       onClick={onClick}
-      className="group bg-industrial-gray border border-industrial-border/60 rounded-lg overflow-hidden cursor-pointer hover:border-industrial-orange/40 hover:shadow-2xl transition-all duration-300 flex flex-col h-full"
+      className="group bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden cursor-pointer hover:border-sky-500/50 hover:shadow-2xl transition-all duration-300 flex flex-col h-full text-left"
     >
       {/* Image Wrap */}
-      <div className="relative aspect-video overflow-hidden">
+      <div className="relative aspect-video overflow-hidden bg-slate-950">
         {imageUrl ? (
           <img
             src={imageUrl}
@@ -27,45 +27,45 @@ const ProjectCard = ({ project, onClick }) => {
             loading="lazy"
           />
         ) : (
-          <div className="w-full h-full bg-industrial-steel flex items-center justify-center">
-            <span className="text-industrial-muted">No Image</span>
+          <div className="w-full h-full bg-slate-950 flex items-center justify-center">
+            <span className="text-slate-500 text-sm">No Image</span>
           </div>
         )}
         
         {/* Category tag */}
-        <span className="absolute top-4 left-4 bg-industrial-charcoal/90 backdrop-blur-sm border border-industrial-border text-industrial-orange px-2.5 py-1 rounded text-xs font-bold uppercase tracking-wider">
+        <span className="absolute top-3.5 left-3.5 right-3.5 max-w-[calc(100%-1.75rem)] truncate bg-slate-950/90 backdrop-blur-md border border-slate-700 text-sky-300 px-3 py-1 rounded-lg text-xs font-bold tracking-wide">
           {project.category}
         </span>
 
         {/* View Icon Overlay */}
-        <div className="absolute inset-0 bg-industrial-charcoal/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
-          <div className="bg-industrial-orange text-industrial-charcoal p-3 rounded-full shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-            <ArrowUpRight className="h-6 w-6 font-bold" />
+        <div className="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
+          <div className="bg-sky-500 text-slate-950 p-3 rounded-full shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+            <ArrowUpRight className="h-6 w-6 stroke-[2.5]" />
           </div>
         </div>
       </div>
 
       {/* Card Info */}
-      <div className="p-5 flex-grow flex flex-col justify-between">
+      <div className="p-6 flex-grow flex flex-col justify-between">
         <div>
-          <h3 className="font-display font-extrabold text-lg text-industrial-light group-hover:text-industrial-orange transition-colors duration-200 line-clamp-1">
+          <h3 className="font-display font-black text-lg text-white group-hover:text-sky-400 transition-colors duration-200 line-clamp-1">
             {project.title}
           </h3>
-          <p className="mt-2 text-sm text-industrial-muted line-clamp-2 leading-relaxed">
+          <p className="mt-2.5 text-sm text-slate-300 line-clamp-2 leading-relaxed">
             {project.description}
           </p>
         </div>
 
-        <div className="border-t border-industrial-border/40 mt-4 pt-3 flex items-center justify-between text-xs text-industrial-muted">
+        <div className="border-t border-slate-800 mt-5 pt-3.5 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-300">
           {project.client && (
-            <span className="flex items-center gap-1">
-              <User className="h-3.5 w-3.5 text-industrial-orange" />
-              <span className="line-clamp-1 max-w-[120px]">{project.client}</span>
+            <span className="flex min-w-0 items-center gap-1.5">
+              <User className="h-3.5 w-3.5 text-sky-400 shrink-0" />
+              <span className="line-clamp-1 max-w-[140px] font-medium">{project.client}</span>
             </span>
           )}
-          <span className="flex items-center gap-1 ml-auto">
-            <Calendar className="h-3.5 w-3.5 text-industrial-orange" />
-            <span>{formattedDate}</span>
+          <span className="flex items-center gap-1.5 sm:ml-auto">
+            <Calendar className="h-3.5 w-3.5 text-sky-400 shrink-0" />
+            <span className="font-medium text-slate-400">{formattedDate}</span>
           </span>
         </div>
       </div>

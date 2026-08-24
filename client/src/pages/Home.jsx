@@ -1,88 +1,96 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ShieldCheck, Award, Users, HardHat, Star } from 'lucide-react';
+import {
+  ArrowRight,
+  ShieldCheck,
+  Award,
+  Clock,
+  Hammer,
+  Sparkles,
+  Layers,
+  ChevronRight,
+  Star,
+  Quote as QuoteIcon
+} from 'lucide-react';
 import API from '../api';
 import ServiceCard from '../components/ServiceCard';
 import ProjectCard from '../components/ProjectCard';
 import Lightbox from '../components/Lightbox';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { resolveAssetUrl } from '../utils/urls';
 
 const Home = () => {
-  const [services, setServices] = useState([]);
+  const [featuredServices, setFeaturedServices] = useState([]);
   const [featuredProjects, setFeaturedProjects] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Lightbox selection
   const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchHomeData = async () => {
       try {
         const [servicesRes, projectsRes, testimonialsRes] = await Promise.all([
           API.getServices(),
           API.getProjects({ featured: true }),
           API.getTestimonials(),
         ]);
-        setServices(servicesRes.data.data.slice(0, 4));
+
+        setFeaturedServices(servicesRes.data.data.slice(0, 3));
         setFeaturedProjects(projectsRes.data.data.slice(0, 3));
-        setTestimonials(testimonialsRes.data.data.slice(0, 3));
+        setTestimonials(testimonialsRes.data.data);
       } catch (err) {
-        console.error('Failed to load home page content:', err.message);
+        console.error('Error loading homepage data:', err.message);
       } finally {
         setLoading(false);
       }
     };
-    fetchData();
+
+    fetchHomeData();
   }, []);
 
-  const stats = [
-    { label: 'Years in Business', value: '18+' },
-    { label: 'Projects Completed', value: '920+' },
-    { label: 'Tons of Fabricated Steel', value: '14,500+' },
-    { label: 'Certified Welding Experts', value: '38+' },
-  ];
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
-    <div className="pt-20">
+    <div className="space-y-0 text-slate-100 selection:bg-sky-500 selection:text-slate-950">
       {/* 1. Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center bg-industrial-charcoal overflow-hidden py-20">
-        {/* Visual Background */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1600"
-            alt="Steel fabrication factory background"
-            className="w-full h-full object-cover opacity-20 filter grayscale"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-industrial-charcoal via-industrial-charcoal/80 to-transparent"></div>
-          {/* Decorative Industrial Grid Overlay */}
-          <div className="absolute inset-0 industrial-grid opacity-30"></div>
-        </div>
+      <section className="relative min-h-[90vh] flex items-center bg-slate-950 border-b border-slate-800 overflow-hidden text-left">
+        {/* Background Grid Pattern & Radial Glow */}
+        <div className="absolute inset-0 industrial-grid opacity-20 pointer-events-none"></div>
+        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-10 right-0 w-96 h-96 bg-sky-400/5 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="max-w-3xl text-left space-y-6">
-            <div className="inline-flex items-center gap-2 bg-industrial-orange/15 border border-industrial-orange/30 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-widest text-industrial-orange">
-              <HardHat className="h-4 w-4" /> GMP & AWS Certified Facility
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+          <div className="max-w-3xl space-y-6">
+            <div className="inline-flex items-center gap-2 bg-sky-500/15 border border-sky-400/40 px-4 py-2 rounded-full text-xs font-bold text-sky-300 shadow-sm">
+              <Sparkles className="h-4 w-4 text-sky-400" />
+              <span>ISO 9001 Certified Cleanroom Solutions</span>
             </div>
-            
-            <h1 className="font-display font-black text-4xl sm:text-6xl text-industrial-light leading-[1.1] tracking-tight uppercase">
-              Precision-Engineered <span className="text-industrial-orange block">Steel Fabrication</span>
+
+            <h1 className="font-display font-black text-4xl sm:text-6xl text-white leading-[1.1] tracking-tight">
+              Precision-Engineered <span className="text-sky-400">Stainless Steel</span> & Cleanroom Solutions
             </h1>
-            
-            <p className="text-base sm:text-lg text-industrial-muted max-w-2xl leading-relaxed">
-              We specialize in custom structural steel columns, heavy-duty industrial framing, precision CNC metal cutting, and certified architectural welding. Built for safety, durability, and standard compliance.
+
+            <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
+              HPY Engineering delivers premium industrial stainless steel fabrication, sterile pharmaceutical furniture, custom cleanroom cabinets, and heavy structural assemblies built to exacting specifications.
             </p>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
               <Link
-                to="/quote"
-                className="inline-flex items-center justify-center px-8 py-4 rounded-md bg-industrial-orange hover:bg-industrial-orange-hover text-industrial-charcoal font-black text-sm tracking-wider uppercase transition-all shadow-lg shadow-industrial-orange/10 hover:scale-[1.02]"
+                to="/products"
+                className="inline-flex items-center justify-center px-8 py-4 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-xs sm:text-sm tracking-wide transition-all shadow-xl shadow-sky-500/25 hover:scale-[1.02]"
               >
-                Request a Quote <ArrowRight className="ml-2 h-4 w-4" />
+                <span>Explore Our Products</span>
+                <ChevronRight className="h-4 w-4 ml-1.5 stroke-[3]" />
               </Link>
               <Link
-                to="/portfolio"
-                className="inline-flex items-center justify-center px-8 py-4 rounded-md bg-industrial-steel/60 hover:bg-industrial-steel border border-industrial-border text-industrial-light font-bold text-sm tracking-wider uppercase transition-all hover:scale-[1.02]"
+                to="/quote"
+                className="inline-flex items-center justify-center px-8 py-4 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-bold text-xs sm:text-sm tracking-wide transition-all hover:scale-[1.02]"
               >
-                View Portfolio
+                <span>Request A Quote</span>
               </Link>
             </div>
           </div>
@@ -90,126 +98,148 @@ const Home = () => {
       </section>
 
       {/* 2. Stats Section */}
-      <section className="bg-industrial-gray border-y border-industrial-border/60 py-10 relative z-10">
+      <section className="bg-slate-900 border-b border-slate-800 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {stats.map((stat, idx) => (
-              <div key={idx} className="space-y-1">
-                <span className="block font-display font-black text-3xl sm:text-5xl text-industrial-orange">
-                  {stat.value}
-                </span>
-                <span className="block text-xs sm:text-sm font-bold uppercase tracking-wider text-industrial-muted">
-                  {stat.label}
-                </span>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+            <div className="space-y-1">
+              <span className="block font-display font-black text-4xl sm:text-5xl text-sky-400">
+                500+
+              </span>
+              <span className="block text-xs sm:text-sm font-bold text-slate-300">
+                Completed Projects
+              </span>
+            </div>
+            <div className="space-y-1">
+              <span className="block font-display font-black text-4xl sm:text-5xl text-sky-400">
+                100%
+              </span>
+              <span className="block text-xs sm:text-sm font-bold text-slate-300">
+                Quality Certifications
+              </span>
+            </div>
+            <div className="space-y-1">
+              <span className="block font-display font-black text-4xl sm:text-5xl text-sky-400">
+                15+
+              </span>
+              <span className="block text-xs sm:text-sm font-bold text-slate-300">
+                Years Of Excellence
+              </span>
+            </div>
+            <div className="space-y-1">
+              <span className="block font-display font-black text-4xl sm:text-5xl text-sky-400">
+                99.8%
+              </span>
+              <span className="block text-xs sm:text-sm font-bold text-slate-300">
+                Client Satisfaction
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Company Intro & Quality Assurance Section */}
+      <section className="bg-slate-950 border-b border-slate-800 py-20 text-left relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <span className="text-xs font-bold tracking-wider text-sky-400 block">
+                Why Choose HPY Engineering
+              </span>
+              <h2 className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight">
+                Engineered For Hygiene, Built For <span className="text-sky-400">Longevity</span>
+              </h2>
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                With comprehensive in-house fabrication machinery including CNC laser cutters, high-tonnage press brakes, and certified TIG/MIG welding units, we craft precision equipment for laboratories, hospitals, pharmaceutical factories, and food processing facilities.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <ShieldCheck className="h-6 w-6 text-sky-400 shrink-0" />
+                  <span className="font-bold text-xs text-slate-200">ISO 9001 Certified</span>
+                </div>
+                <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <Award className="h-6 w-6 text-sky-400 shrink-0" />
+                  <span className="font-bold text-xs text-slate-200">Qualified AWS Welders</span>
+                </div>
               </div>
+            </div>
+
+            <div className="bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-2xl space-y-6">
+              <h3 className="font-display font-bold text-xl text-white">
+                Zero-Incident Safety Standard
+              </h3>
+              <p className="text-slate-300 text-sm leading-relaxed">
+                Every fabrication piece undergoes strict quality and surface roughness testing (Ra values for cleanroom compliance) before delivery.
+              </p>
+              <ul className="space-y-3 text-sm text-slate-300">
+                <li className="flex items-center gap-2.5">
+                  <span className="h-2 w-2 rounded-full bg-sky-400"></span>
+                  <span>SS 304 & SS 316 Grade Stainless Steel Only</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <span className="h-2 w-2 rounded-full bg-sky-400"></span>
+                  <span>Electropolished & Mirror Finish Capabilities</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <span className="h-2 w-2 rounded-full bg-sky-400"></span>
+                  <span>Factory Direct Pricing With Fast Turnarounds</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Core Capabilities Showcase */}
+      <section className="bg-slate-900 border-b border-slate-800 py-20 text-left">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-800 pb-6">
+            <div>
+              <span className="text-xs font-bold tracking-wider text-sky-400 block mb-1">
+                Precision Manufacturing
+              </span>
+              <h2 className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight">
+                Our Core <span className="text-sky-400">Capabilities</span>
+              </h2>
+            </div>
+            <Link
+              to="/products"
+              className="inline-flex items-center font-bold text-xs sm:text-sm tracking-wide text-sky-400 hover:text-sky-300 transition-colors bg-sky-500/10 border border-sky-500/30 px-6 py-3 rounded-xl hover:bg-sky-500/20"
+            >
+              <span>Explore All Products</span>
+              <ArrowRight className="h-4 w-4 ml-2" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredServices.map((service) => (
+              <ServiceCard key={service._id} service={service} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* 3. Company Intro & Safety */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="relative">
-            <img
-              src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800"
-              alt="Structural Steel Welding Team"
-              className="rounded-lg shadow-2xl border border-industrial-border/60 object-cover w-full aspect-video"
-            />
-            {/* Float Badge */}
-            <div className="absolute -bottom-6 -right-6 hidden sm:flex items-center gap-3 bg-industrial-gray border border-industrial-orange/30 p-5 rounded-lg shadow-2xl max-w-xs">
-              <ShieldCheck className="h-10 w-10 text-industrial-orange shrink-0" />
-              <div>
-                <h4 className="font-bold text-sm text-industrial-light">Zero-Incident Safety Record</h4>
-                <p className="text-xs text-industrial-muted mt-0.5">Strict compliance with OSHA protocols.</p>
-              </div>
+      {/* 5. Featured Projects Gallery */}
+      <section className="bg-slate-950 border-b border-slate-800 py-20 text-left">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-800 pb-6">
+            <div>
+              <span className="text-xs font-bold tracking-wider text-sky-400 block mb-1">
+                Proven Track Record
+              </span>
+              <h2 className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight">
+                Featured <span className="text-sky-400">Projects</span>
+              </h2>
             </div>
-          </div>
-
-          <div className="space-y-6 text-left">
-            <h2 className="font-display font-black text-3xl sm:text-4xl text-industrial-light uppercase tracking-tight">
-              A Culture of <span className="text-industrial-orange">Precision & Safety</span>
-            </h2>
-            <p className="text-sm sm:text-base text-industrial-muted leading-relaxed">
-              Founded in 2008, HPY Engineering has grown from a local workshop into a state-of-the-art stainless steel and cleanroom fabrication facility. We serve pharmaceutical, biotech, and industrial clients nationwide.
-            </p>
-            <p className="text-sm sm:text-base text-industrial-muted leading-relaxed">
-              Every weld is performed by certified AWS professionals, and our structural materials comply strictly with AISC standards. Whether you need single prototyping, heavy-duty production runs, or commercial frame erections, we have the machinery and expertise.
-            </p>
-            <div className="pt-4 flex flex-wrap gap-6">
-              <div className="flex items-center gap-2">
-                <Award className="h-5 w-5 text-industrial-orange" />
-                <span className="font-bold text-xs uppercase tracking-wider text-industrial-light">ISO 9001 Certified</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-industrial-orange" />
-                <span className="font-bold text-xs uppercase tracking-wider text-industrial-light">Qualified AWS Welders</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Core Services Overview */}
-      <section className="bg-industrial-gray/50 border-t border-industrial-border/60 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
-            <h2 className="font-display font-black text-3xl sm:text-4xl text-industrial-light uppercase tracking-tight">
-              Our <span className="text-industrial-orange">Core Capabilities</span>
-            </h2>
-            <p className="text-sm text-industrial-muted">
-              We operate high-capacity heavy machinery and engineering software to deliver structurally sound metal fabrications.
-            </p>
-          </div>
-
-          {loading ? (
-            <LoadingSpinner />
-          ) : services.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {services.map((service) => (
-                <ServiceCard key={service._id} service={service} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center text-industrial-muted py-8">
-              No services configured. Seed the database or add them in the admin dashboard.
-            </div>
-          )}
-
-          <div className="mt-12 text-center">
             <Link
-              to="/services"
-              className="inline-flex items-center font-bold text-sm tracking-wider uppercase text-industrial-orange hover:text-industrial-orange-hover transition-colors"
+              to="/portfolio"
+              className="inline-flex items-center font-bold text-xs sm:text-sm tracking-wide text-sky-400 hover:text-sky-300 transition-colors bg-sky-500/10 border border-sky-500/30 px-6 py-3 rounded-xl hover:bg-sky-500/20 shrink-0"
             >
-              Explore All Services <ArrowRight className="ml-1 h-4 w-4" />
+              <span>View Full Portfolio</span>
+              <ArrowRight className="h-4 w-4 ml-2" />
             </Link>
           </div>
-        </div>
-      </section>
 
-      {/* 5. Featured Projects Section */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div className="text-left max-w-2xl space-y-3">
-            <h2 className="font-display font-black text-3xl sm:text-4xl text-industrial-light uppercase tracking-tight">
-              Featured <span className="text-industrial-orange">Projects</span>
-            </h2>
-            <p className="text-sm text-industrial-muted">
-              View our latest structural steel installations, architectural fabrication work, and custom precision components.
-            </p>
-          </div>
-          <Link
-            to="/portfolio"
-            className="inline-flex items-center font-bold text-sm tracking-wider uppercase text-industrial-orange hover:text-industrial-orange-hover transition-colors shrink-0"
-          >
-            Browse Full Gallery <ArrowRight className="ml-1 h-4 w-4" />
-          </Link>
-        </div>
-
-        {loading ? (
-          <LoadingSpinner />
-        ) : featuredProjects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProjects.map((project) => (
               <ProjectCard
                 key={project._id}
@@ -218,64 +248,67 @@ const Home = () => {
               />
             ))}
           </div>
-        ) : (
-          <div className="text-center text-industrial-muted py-8">
-            No projects featured yet. Mark projects as featured in the admin panel.
-          </div>
-        )}
+        </div>
       </section>
 
       {/* 6. Testimonials Section */}
       {testimonials.length > 0 && (
-        <section className="bg-industrial-gray py-20 border-t border-industrial-border/60">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
-              <h2 className="font-display font-black text-3xl sm:text-4xl text-industrial-light uppercase tracking-tight">
-                Client <span className="text-industrial-orange">Reviews</span>
+        <section className="bg-slate-900 py-20 text-left">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            <div className="text-center max-w-2xl mx-auto">
+              <span className="text-xs font-bold tracking-wider text-sky-400 block mb-1">
+                Client Trust
+              </span>
+              <h2 className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight">
+                What Our Clients <span className="text-sky-400">Say</span>
               </h2>
-              <p className="text-sm text-industrial-muted">
-                What pharmaceutical manufacturers and cleanroom engineers say about working with HPY Engineering.
-              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {testimonials.map((t) => (
-                <div
-                  key={t._id}
-                  className="bg-industrial-charcoal border border-industrial-border/50 rounded-lg p-6 flex flex-col justify-between shadow-md relative hover:border-industrial-orange/30 transition-all"
-                >
-                  <div className="space-y-4">
-                    {/* Stars */}
-                    <div className="flex text-industrial-orange">
-                      {[...Array(t.rating)].map((_, i) => (
-                        <Star key={i} className="h-4 w-4 fill-current" />
-                      ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {testimonials.map((t) => {
+                const avatarUrl = resolveAssetUrl(t.image);
+                return (
+                  <div
+                    key={t._id}
+                    className="bg-slate-950 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-xl relative"
+                  >
+                    <div className="space-y-4">
+                      <div className="flex text-amber-400 gap-0.5">
+                        {[...Array(t.rating || 5)].map((_, i) => (
+                          <Star key={i} className="h-4 w-4 fill-current" />
+                        ))}
+                      </div>
+                      <p className="text-slate-200 text-sm italic leading-relaxed">
+                        "{t.message}"
+                      </p>
                     </div>
-                    <p className="text-sm text-industrial-muted italic leading-relaxed">
-                      "{t.message}"
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3 border-t border-industrial-border/30 mt-6 pt-4">
-                    {t.image && (
-                      <img
-                        src={t.image}
-                        alt={t.clientName}
-                        className="h-10 w-10 rounded-full object-cover border border-industrial-border"
-                      />
-                    )}
-                    <div>
-                      <h4 className="font-bold text-sm text-industrial-light">{t.clientName}</h4>
-                      <p className="text-xs text-industrial-muted">{t.company}</p>
+
+                    <div className="flex items-center gap-3 border-t border-slate-800 mt-6 pt-4">
+                      {avatarUrl ? (
+                        <img
+                          src={avatarUrl}
+                          alt={t.clientName}
+                          className="h-10 w-10 rounded-full object-cover border border-slate-700"
+                        />
+                      ) : (
+                        <div className="h-10 w-10 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center font-bold text-xs text-sky-400">
+                          {t.clientName.substring(0, 2).toUpperCase()}
+                        </div>
+                      )}
+                      <div>
+                        <h4 className="font-bold text-sm text-white">{t.clientName}</h4>
+                        <span className="text-xs text-slate-400">{t.company || 'Industry Partner'}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
       )}
 
-      {/* 7. Lightbox Modal */}
+      {/* Lightbox for featured project preview */}
       {selectedProject && (
         <Lightbox project={selectedProject} onClose={() => setSelectedProject(null)} />
       )}

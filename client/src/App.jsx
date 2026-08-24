@@ -5,12 +5,13 @@ import { AuthProvider } from './context/AuthContext';
 // Components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 
 // Public Pages
 import Home from './pages/Home';
-import About from './pages/About';
 import Services from './pages/Services';
 import Portfolio from './pages/Portfolio';
+import Products from './pages/Products';
 import Quote from './pages/Quote';
 import Contact from './pages/Contact';
 
@@ -28,9 +29,9 @@ import ManageTestimonials from './pages/admin/ManageTestimonials';
 // Layout wrapping Navbar & Footer for public pages
 const PublicLayout = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-industrial-charcoal text-industrial-light selection:bg-sky-500 selection:text-slate-950">
       <Navbar />
-      <div className="grow">
+      <div className="grow pt-[5.5rem]">
         <Outlet />
       </div>
       <Footer />
@@ -43,12 +44,13 @@ function App() {
   return (
     <AuthProvider>
       <Router>
+        <ScrollToTop />
         <Routes>
           {/* Public Website Pages */}
           <Route path="/" element={<PublicLayout />}>
             <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
             <Route path="services" element={<Services />} />
+            <Route path="products" element={<Products />} />
             <Route path="portfolio" element={<Portfolio />} />
             <Route path="quote" element={<Quote />} />
             <Route path="contact" element={<Contact />} />
